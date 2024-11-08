@@ -1,0 +1,31 @@
+# Elasticsearch ILM Shard Allocation Audit
+
+## Problem Description:
+
+The goal of this script is to help you audit the allocation of Elasticsearch index shards based on their ILM (Index Lifecycle Management) phase. 
+
+In Elasticsearch, ILM policies dictate which **phase** an index should be in (such as **hot**, **warm**, **cold**, or **frozen**), and where its shards should be allocated (on nodes with corresponding roles). This script checks for mismatches where:
+
+- An index is in one phase (e.g., **hot**) but its shards are stored on nodes that do not match the expected node role for that phase (e.g., **cold** nodes).
+
+## Solution:
+
+This script compares the **ILM phase** of each index with the **node role** of each shard to ensure they align properly. Any discrepancies will be flagged, and the output will show which shards need to be moved to the correct node role.
+
+### **What the Script Does:**
+
+1. **Checks the ILM phase of each index**.
+2. **Checks the location (node role) of each shard**.
+3. **Flags mismatches** where the node role of the shard does not match the ILM phase of the index.
+4. **Outputs the results** to a CSV file for easy review.
+
+---
+
+## Prerequisites:
+
+### **1. Install Python:**
+Make sure Python 3.x is installed on your system. You can download it from the official Python website: [Download Python](https://www.python.org/downloads/).
+
+Verify Python installation by running:
+```bash
+python --version
