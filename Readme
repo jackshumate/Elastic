@@ -29,3 +29,73 @@ Make sure Python 3.x is installed on your system. You can download it from the o
 Verify Python installation by running:
 ```bash
 python --version
+
+2. Install Required Dependencies (Optional):
+
+If you'd like to automate the process of pulling data directly from Elasticsearch, you will need the requests library. This is optional and needed only if you are fetching data via the Elasticsearch API.
+
+To install requests, run:
+
+pip install requests
+
+Collecting the Required Information:
+
+To use this script, you need to gather the following information from your Elasticsearch cluster.
+1. Get Index Lifecycle Management (ILM) Status:
+
+Run the following API command to get the ILM explain status for all your indices:
+
+GET _ilm/explain
+
+Save this output to a file named ilm_explain.json.
+2. Get Shard Allocation Information:
+
+Run this command to get details about shard allocation in your cluster:
+
+GET _cat/shards?v
+
+Save this output to a file named cat_shards.txt.
+3. Get Node Information:
+
+Run this command to get details about your cluster nodes:
+
+GET _cat/nodes?v
+
+Save this output to a file named cat_nodes.txt.
+File Naming:
+
+    ilm_explain.json — The output from the _ilm/explain API.
+    cat_shards.txt — The output from the _cat/shards API.
+    cat_nodes.txt — The output from the _cat/nodes API.
+
+Ensure these files are available in the same directory as the script or specify their full path in the script.
+Running the Program:
+
+Once you have collected the necessary files, you can run the script to analyze the shard allocations.
+
+    Save the Python script to a file (e.g., ilm_shard_audit.py).
+    Ensure the required input files (ilm_explain.json, cat_shards.txt, cat_nodes.txt) are in the same directory as the script.
+    Run the script with Python:
+
+    python ilm_shard_audit.py
+
+The script will process the input data and output any mismatches to a CSV file, ilm_shard_mismatches.csv.
+
+
+
+---------------------------------------------------
+
+### **Explanation of the `install_dependencies.sh` Script:**
+
+This script will ensure that the user has the necessary dependencies installed to run the Python script:
+
+1. **Check Python Installation**: It checks if Python 3 is installed on the system.
+2. **Install Requests**: Installs the `requests` library, which is needed if you want to pull data directly from Elasticsearch via API.
+3. **Confirmation**: Displays a message confirming that dependencies have been installed successfully.
+
+### **How to Use the `.sh` Script**:
+
+1. Save the script as `install_dependencies.sh`.
+2. Make the script executable:
+   ```bash
+   chmod +x install_dependencies.sh
